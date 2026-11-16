@@ -20,8 +20,8 @@ function makeD1(env) {
         body: JSON.stringify({
           sql,
           params: params.map(value =>
-            value === undefined ? null :
-            typeof value === "boolean" ? Number(value) : value
+            value === undefined || value === null ? null :
+            typeof value === "boolean" ? String(Number(value)) : String(value)
           )
         })
       }
