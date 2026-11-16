@@ -2,7 +2,8 @@ const HEADERS={"content-type":"application/json; charset=utf-8","cache-control":
 const reply=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:HEADERS});
 const error=(message,status=400)=>reply({ok:false,error:message},status);
 const text=(v,max=5000)=>typeof v==="string"?v.trim().slice(0,max):"";
-const id=()=>crypto.randomUUID();\nconst safeId=v=>/^[A-Za-z0-9_-]{1,80}$/.test(text(v,80))?text(v,80):id();
+const id=()=>crypto.randomUUID();
+const safeId=v=>/^[A-Za-z0-9_-]{1,80}$/.test(text(v,80))?text(v,80):id();
 const isHttps=v=>{try{return new URL(v).protocol==="https:"}catch{return false}};
 const clamp=(v,min,max,def)=>Math.min(max,Math.max(min,Number.isFinite(Number(v))?Math.floor(Number(v)):def));
 async function parse(req){try{return await req.json()}catch{return null}}
@@ -49,7 +50,8 @@ async function saveGenres(database,animeId,genres){
 export default {async fetch(req,env){
  const url=new URL(req.url),path=url.pathname.replace(/\/+$/,"")||"/";
  const done=r=>cors(req,env,r);
- if(req.method==="OPTIONS")return done(new Response(null,{status:204}));\n if(Number(req.headers.get("content-length")||0)>262144)return done(error("Request body is too large",413));
+ if(req.method==="OPTIONS")return done(new Response(null,{status:204}));
+ if(Number(req.headers.get("content-length")||0)>262144)return done(error("Request body is too large",413));
  try{
   if(path==="/api/health"&&req.method==="GET"){
    let database=false;try{await db(env).prepare("SELECT 1 AS ok").first();database=true}catch{}
@@ -84,7 +86,8 @@ export default {async fetch(req,env){
    const r=await database.prepare("SELECT a.* FROM anime a LEFT JOIN featured_anime f ON f.anime_id=a.id WHERE a.featured=1 OR (f.active=1) ORDER BY COALESCE(f.position,999),a.updated_at DESC LIMIT 20").all();return done(reply({data:r.results||[]}));
   }
   if(!path.startsWith("/api/admin/")&&!["POST","PATCH","DELETE"].includes(req.method))return done(error("Not found",404));
-  if(!await authorized(req,env))return done(error("Admin API key required",401));\n  if(path==="/api/admin/verify"&&req.method==="GET")return done(reply({ok:true,authorized:true}));
+  if(!await authorized(req,env))return done(error("Admin API key required",401));
+  if(path==="/api/admin/verify"&&req.method==="GET")return done(reply({ok:true,authorized:true}));
   if(path==="/api/admin/anime"&&req.method==="POST"){
    const b=await parse(req),problem=validateAnime(b);if(problem)return done(error(problem));
    const animeId=safeId(b.id);
