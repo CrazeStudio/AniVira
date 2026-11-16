@@ -21,4 +21,5 @@ window.openDetails=async(id,fromSave=false)=>{
  }catch{document.getElementById("modalContent").innerHTML='<div class="empty">Could not load this anime.</div>'}
 };
 let wait;searchInput.addEventListener("input",()=>{clearTimeout(wait);const q=searchInput.value.trim();if(q.length<2||!base())return;wait=setTimeout(async()=>{try{const a=await load(q);if(a.length){searchResults.insertAdjacentHTML("afterbegin",'<div style="grid-column:1/-1;color:#c4a9ff;font-weight:800">ANI VIRA DATABASE</div>'+a.map(card).join(""));bindCards(searchResults)}}catch{}},700)});
+if(currentPage==="home"){load().then(a=>{if(a.length&&currentPage==="home"){homeContent.insertAdjacentHTML("afterbegin",shelf("AniVira catalogue",a,"Curated in the AniVira database"));bindCards(homeContent)}}).catch(()=>{})}
 })();
