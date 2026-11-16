@@ -51,7 +51,7 @@ function validateAnime(b) {
   return null;
 }
 module.exports = async (req,res) => {
-  const path="/"+String(req.query.path || "").replace(/^\/+|\/+$/g,"");
+  const segments=Array.isArray(req.query.path)?req.query.path:[req.query.path].filter(Boolean);\n  const path="/api/"+segments.join("/").replace(/^\/+|\/+$/g,"");
   if (req.method==="OPTIONS") { res.setHeader("Allow","GET,POST,PATCH,DELETE,OPTIONS"); return res.status(204).end(); }
   if (Number(req.headers["content-length"]||0)>262144) return fail(res,413,"Request body is too large");
   try {
