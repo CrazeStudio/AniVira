@@ -75,12 +75,10 @@ export default {async fetch(req,env){
   let m=path.match(/^\/api\/anime\/([A-Za-z0-9_-]+)$/);
   if(m&&req.method==="GET"){const a=await getAnime(env,m[1]);return done(a?reply({data:a}):error("Anime not found",404))}
   if(path==="/api/episodes"&&req.method==="GET"){
-   const animeId=text(url.searchParams.get("anime_id"),80);if(!animeId)return done(error("anime_id is required"));
-   const r=await database.prepare("SELECT * FROM episodes WHERE anime_id=? ORDER BY season_id,episode_number").bind(animeId).all();return done(reply({data:r.results||[]}));
+   const animeId=text(url.searchParams.get("anime_id"),80),limit=clamp(url.searchParams.get("limit"),1,1000,500);const r=animeId?await database.prepare("SELECT * FROM episodes WHERE anime_id=? ORDER BY season_id,episode_number").bind(animeId).all():await database.prepare("SELECT * FROM episodes ORDER BY anime_id,season_id,episode_number LIMIT ?").bind(limit).all();return done(reply({data:r.results||[]}));
   }
   if(path==="/api/sources"&&req.method==="GET"){
-   const animeId=text(url.searchParams.get("anime_id"),80);if(!animeId)return done(error("anime_id is required"));
-   const r=await database.prepare("SELECT * FROM viewing_sources WHERE anime_id=? ORDER BY created_at DESC").bind(animeId).all();return done(reply({data:r.results||[]}));
+   const animeId=text(url.searchParams.get("anime_id"),80),limit=clamp(url.searchParams.get("limit"),1,1000,500);const r=animeId?await database.prepare("SELECT * FROM viewing_sources WHERE anime_id=? ORDER BY created_at DESC").bind(animeId).all():await database.prepare("SELECT * FROM viewing_sources ORDER BY created_at DESC LIMIT ?").bind(limit).all();return done(reply({data:r.results||[]}));
   }
   if(path==="/api/featured"&&req.method==="GET"){
    const r=await database.prepare("SELECT a.* FROM anime a LEFT JOIN featured_anime f ON f.anime_id=a.id WHERE a.featured=1 OR (f.active=1) ORDER BY COALESCE(f.position,999),a.updated_at DESC LIMIT 20").all();return done(reply({data:r.results||[]}));
