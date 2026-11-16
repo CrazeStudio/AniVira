@@ -2,7 +2,7 @@ const HEADERS={"content-type":"application/json; charset=utf-8","cache-control":
 const reply=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:HEADERS});
 const error=(message,status=400)=>reply({ok:false,error:message},status);
 const text=(v,max=5000)=>typeof v==="string"?v.trim().slice(0,max):"";
-const id=()=>crypto.randomUUID();
+const id=()=>crypto.randomUUID();\nconst safeId=v=>/^[A-Za-z0-9_-]{1,80}$/.test(text(v,80))?text(v,80):id();
 const isHttps=v=>{try{return new URL(v).protocol==="https:"}catch{return false}};
 const clamp=(v,min,max,def)=>Math.min(max,Math.max(min,Number.isFinite(Number(v))?Math.floor(Number(v)):def));
 async function parse(req){try{return await req.json()}catch{return null}}
@@ -49,7 +49,7 @@ async function saveGenres(database,animeId,genres){
 export default {async fetch(req,env){
  const url=new URL(req.url),path=url.pathname.replace(/\/+$/,"")||"/";
  const done=r=>cors(req,env,r);
- if(req.method==="OPTIONS")return done(new Response(null,{status:204}));
+ if(req.method==="OPTIONS")return done(new Response(null,{status:204}));\n if(Number(req.headers.get("content-length")||0)>262144)return done(error("Request body is too large",413));
  try{
   if(path==="/api/health"&&req.method==="GET"){
    let database=false;try{await db(env).prepare("SELECT 1 AS ok").first();database=true}catch{}
@@ -87,7 +87,7 @@ export default {async fetch(req,env){
   if(!await authorized(req,env))return done(error("Admin API key required",401));
   if(path==="/api/admin/anime"&&req.method==="POST"){
    const b=await parse(req),problem=validateAnime(b);if(problem)return done(error(problem));
-   const animeId=text(b.id,80)||id();
+   const animeId=safeId(b.id);
    await database.prepare("INSERT INTO anime(id,mal_id,title,title_english,synopsis,poster_url,banner_url,format,status,season,release_year,episode_count,score,official_url,featured,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)")
     .bind(animeId,Number(b.mal_id)||null,text(b.title,200),text(b.title_english,200),text(b.synopsis,5000),text(b.poster_url,2048),text(b.banner_url,2048),text(b.format,30),text(b.status,40),text(b.season,30),Number(b.release_year)||null,Number(b.episode_count)||null,b.score===""||b.score==null?null:Number(b.score),text(b.official_url,2048),b.featured?1:0).run();
    await saveGenres(database,animeId,b.genres);return done(reply({ok:true,id:animeId,data:await getAnime(env,animeId)},201));
@@ -108,7 +108,7 @@ export default {async fetch(req,env){
   if(path==="/api/admin/episodes"&&req.method==="POST"){
    const b=await parse(req);if(!b||!text(b.anime_id,80)||!Number.isInteger(Number(b.episode_number))||Number(b.episode_number)<1)return done(error("Anime ID and a valid episode number are required"));
    for(const k of ["thumbnail_url"])if(b[k]&&!isHttps(b[k]))return done(error(k+" must be HTTPS"));
-   const episodeId=text(b.id,80)||id();
+   const episodeId=safeId(b.id);
    await database.prepare("INSERT INTO episodes(id,anime_id,season_id,episode_number,title,synopsis,thumbnail_url,duration_minutes,release_date) VALUES(?,?,?,?,?,?,?,?,?)").bind(episodeId,text(b.anime_id,80),text(b.season_id,80)||null,Number(b.episode_number),text(b.title,200),text(b.synopsis,3000),text(b.thumbnail_url,2048),Number(b.duration_minutes)||null,text(b.release_date,30)).run();
    return done(reply({ok:true,id:episodeId},201));
   }
@@ -121,7 +121,7 @@ export default {async fetch(req,env){
   if(m&&req.method==="DELETE"){await database.prepare("DELETE FROM episodes WHERE id=?").bind(m[1]).run();return done(reply({ok:true}))}
   if(path==="/api/admin/sources"&&req.method==="POST"){
    const b=await parse(req);if(!b||!text(b.anime_id,80)||!text(b.provider,120)||!isHttps(b.url))return done(error("Anime, provider and HTTPS source URL are required"));
-   const type=["official_page","trailer","authorized_stream"].includes(b.source_type)?b.source_type:"official_page",sourceId=text(b.id,80)||id();
+   const type=["official_page","trailer","authorized_stream"].includes(b.source_type)?b.source_type:"official_page",sourceId=safeId(b.id);
    await database.prepare("INSERT INTO viewing_sources(id,anime_id,episode_id,provider,source_type,url,language) VALUES(?,?,?,?,?,?,?)").bind(sourceId,text(b.anime_id,80),text(b.episode_id,80)||null,text(b.provider,120),type,text(b.url,2048),text(b.language,40)).run();return done(reply({ok:true,id:sourceId},201));
   }
   m=path.match(/^\/api\/admin\/sources\/([A-Za-z0-9_-]+)$/);
