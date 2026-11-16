@@ -7,6 +7,10 @@ const oldHome=window.renderHome;
 window.renderHome=async()=>{await oldHome();try{const a=await load();if(a.length){homeContent.insertAdjacentHTML("afterbegin",shelf("AniVira catalogue",a,"Curated in the AniVira database"));bindCards(homeContent)}}catch{}};
 const oldExplore=window.renderExplore;
 window.renderExplore=async()=>{await oldExplore();try{const a=await load();const c=document.getElementById("catalogue");if(c&&a.length){c.insertAdjacentHTML("afterbegin",a.map(card).join(""));bindCards(c)}}catch{}};
+const oldSeason=window.renderSeason;
+window.renderSeason=async()=>{await oldSeason();try{const a=(await load()).filter(x=>/air|upcoming|season/i.test(String(x.status)+" "+String(x.year)));const c=document.getElementById("catalogue");if(c&&a.length){c.insertAdjacentHTML("afterbegin",a.map(card).join(""));bindCards(c)}}catch{}};
+const oldToggle=window.toggleSave;
+window.toggleSave=async id=>{if(!isNaN(Number(id)))return oldToggle(id);const exists=watchlist.some(x=>itemId(x)===String(id));if(exists){watchlist=watchlist.filter(x=>itemId(x)!==String(id));localStorage.setItem("anivira-watchlist",JSON.stringify(watchlist));renderPage();return;}try{const r=await get("/api/anime/"+encodeURIComponent(id));watchlist.push(norm(r.data));localStorage.setItem("anivira-watchlist",JSON.stringify(watchlist));renderPage()}catch{window.openDetails(id,true)}};
 const oldDetails=window.openDetails;
 window.openDetails=async(id,fromSave=false)=>{
  if(!isNaN(Number(id)))return oldDetails(id,fromSave);
