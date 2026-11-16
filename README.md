@@ -43,6 +43,7 @@ The D1 database is connected by the code but must be provisioned and deployed in
 ### Public GET endpoints
 - `GET /api/health`
 - `GET /api/admin/verify` (Bearer admin key required)
+- `GET /api/admin/verify` (Bearer admin key required)
 - `GET /api/anime?limit=24&offset=0&q=...`
 - `GET /api/anime/:id`
 - `GET /api/genres`
@@ -140,7 +141,7 @@ After that, create an anime in Studio and confirm it appears in the public AniVi
 Connect the repository to Cloudflare Pages:
 - Production branch: `main`
 - Build command: none
-- Build output directory: `/`
+- Build output directory: `.`
 
 The site is static HTML, CSS and JavaScript. Deploy the Worker separately.
 
