@@ -10,7 +10,8 @@ AniVira is a responsive anime discovery and catalogue website with a separate Cl
 - Search, catalogue browsing, anime detail dialogs and official trailer embeds.
 - AniVira's own D1 catalogue displayed alongside discovery data.
 - Anime metadata, genres, synopsis, posters and banners.
-- Episode lists and official / authorized source links from D1.\n- Dedicated `watch.html` page with episode selection, authorized source selection, direct MP4/WebM playback and HLS playback where the provider permits it.
+- Episode lists and official / authorized source links from D1.
+- Dedicated `watch.html` page with episode selection, authorized source selection, direct MP4/WebM playback and HLS playback where the provider permits it.
 - Device-local watchlist and watched-state preferences.
 - Mobile navigation, lazy-loaded artwork, loading and error states.
 
@@ -40,7 +41,8 @@ The D1 database is connected by the code but must be provisioned and deployed in
 ## API
 
 ### Public GET endpoints
-- `GET /api/health`\n- `GET /api/admin/verify` (Bearer admin key required)
+- `GET /api/health`
+- `GET /api/admin/verify` (Bearer admin key required)
 - `GET /api/anime?limit=24&offset=0&q=...`
 - `GET /api/anime/:id`
 - `GET /api/genres`
