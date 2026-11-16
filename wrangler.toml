@@ -7,3 +7,6 @@ binding = "DB"
 database_name = "anivira"
 database_id = "REPLACE_WITH_YOUR_CLOUDFLARE_D1_DATABASE_ID"
 migrations_dir = "database/migrations"
+
+[vars]
+ALLOWED_ORIGIN = "https://YOUR-PROJECT.pages.dev"
