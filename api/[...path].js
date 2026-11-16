@@ -100,8 +100,7 @@ module.exports = async function handler(req, res) {
 
     const env = {
       DB: makeD1(process.env),
-      ADMIN_API_KEY: process.env.ADMIN_API_KEY || "",
-      ALLOWED_ORIGIN: process.env.ALLOWED_ORIGIN || ""
+      ADMIN_API_KEY: process.env.ADMIN_API_KEY || ""
     };
     const { default: app } = await import("../lib/api-handler.mjs");
     const response = await app.fetch(request, env);
