@@ -84,7 +84,7 @@ export default {async fetch(req,env){
    const r=await database.prepare("SELECT a.* FROM anime a LEFT JOIN featured_anime f ON f.anime_id=a.id WHERE a.featured=1 OR (f.active=1) ORDER BY COALESCE(f.position,999),a.updated_at DESC LIMIT 20").all();return done(reply({data:r.results||[]}));
   }
   if(!path.startsWith("/api/admin/")&&!["POST","PATCH","DELETE"].includes(req.method))return done(error("Not found",404));
-  if(!await authorized(req,env))return done(error("Admin API key required",401));
+  if(!await authorized(req,env))return done(error("Admin API key required",401));\n  if(path==="/api/admin/verify"&&req.method==="GET")return done(reply({ok:true,authorized:true}));
   if(path==="/api/admin/anime"&&req.method==="POST"){
    const b=await parse(req),problem=validateAnime(b);if(problem)return done(error(problem));
    const animeId=safeId(b.id);
