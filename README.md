@@ -10,7 +10,7 @@ AniVira is a responsive anime discovery and catalogue website with a separate Cl
 - Search, catalogue browsing, anime detail dialogs and official trailer embeds.
 - AniVira's own D1 catalogue displayed alongside discovery data.
 - Anime metadata, genres, synopsis, posters and banners.
-- Episode lists and official / authorized source links from D1.
+- Episode lists and official / authorized source links from D1.\n- Dedicated `watch.html` page with episode selection, authorized source selection, direct MP4/WebM playback and HLS playback where the provider permits it.
 - Device-local watchlist and watched-state preferences.
 - Mobile navigation, lazy-loaded artwork, loading and error states.
 
@@ -40,7 +40,7 @@ The D1 database is connected by the code but must be provisioned and deployed in
 ## API
 
 ### Public GET endpoints
-- `GET /api/health`
+- `GET /api/health`\n- `GET /api/admin/verify` (Bearer admin key required)
 - `GET /api/anime?limit=24&offset=0&q=...`
 - `GET /api/anime/:id`
 - `GET /api/genres`
@@ -60,7 +60,7 @@ The D1 database is connected by the code but must be provisioned and deployed in
 - `PATCH /api/admin/sources/:id`
 - `DELETE /api/admin/sources/:id`
 
-The API uses prepared SQL statements, input validation, HTTPS URL checks, exact-origin CORS allowlisting and protected write routes. Public read routes expose catalogue metadata only. Never add private credentials or unlicensed media URLs.
+The API uses prepared SQL statements, input validation, HTTPS URL checks, request-size limits, exact-origin CORS allowlisting and protected write routes. Configure a Cloudflare WAF/rate-limiting rule for `/api/admin/*` in production; do not rely on browser-side limits. Public read routes expose catalogue metadata only. Never add private credentials or unlicensed media URLs.
 
 ## Cloudflare deployment
 
