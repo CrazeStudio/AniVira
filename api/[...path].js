@@ -4,11 +4,10 @@ function makeD1(env) {
   const accountId = env.CLOUDFLARE_ACCOUNT_ID;
   const databaseId = env.CLOUDFLARE_D1_DATABASE_ID;
   const token = env.CLOUDFLARE_API_TOKEN;
-  if (!accountId || !databaseId || !token) {
-    throw new Error("D1 environment is not configured");
-  }
-
   async function query(sql, params = []) {
+    if (!accountId || !databaseId || !token) {
+      throw new Error("D1 environment is not configured");
+    }
     const bound = [];
     let parameterIndex = 0;
     const restSql = sql.replace(/\?/g, () => {
@@ -100,7 +99,7 @@ module.exports = async function handler(req, res) {
 
     const env = {
       DB: makeD1(process.env),
-      ADMIN_API_KEY: process.env.ADMIN_API_KEY || ""
+      ADMIN_API_KEY: (process.env.ADMIN_API_KEY || "").trim()
     };
     const { default: app } = await import("../lib/api-handler.mjs");
     const response = await app.fetch(request, env);
