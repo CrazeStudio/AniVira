@@ -11,7 +11,7 @@ module.exports = async function handler(req, res) {
   }
   const expected = (process.env.ADMIN_API_KEY || "").trim();
   const authorization = String(req.headers.authorization || "");
-  const match = authorization.match(/^Bearer\\s+(.+)$/i);
+  const match = authorization.match(/^Bearer\s+(.+)$/i);
   const supplied = match ? match[1].trim() : "";
   if (!expected) {
     res.statusCode = 503;
