@@ -1,5 +1,5 @@
 (()=>{
-const base=()=>String(localStorage.getItem("anivira_api_base")||window.ANIVIRA_API_BASE||"").replace(/\/$/,"");
+const base=()=>String(localStorage.getItem("anivira_api_base")||window.ANIVIRA_API_BASE||window.location.origin).replace(/\/$/,"");
 const get=async path=>{const b=base();if(!b)return null;const r=await fetch(b+path);if(!r.ok)throw Error("API unavailable");return r.json()};
 const norm=a=>({id:String(a.id),title:a.title||"Untitled",alt:a.title_english||"",image:a.poster_url||"",banner:a.banner_url||"",year:a.release_year||a.season||"—",type:a.format||"Anime",episodes:a.episode_count??"?",score:a.score??null,url:a.official_url||"",synopsis:a.synopsis||"",genres:a.genres||[]});
 const load=async(q="")=>{const r=await get("/api/anime?limit=60&offset=0"+(q?"&q="+encodeURIComponent(q):""));return (r?.data||[]).map(norm)};
