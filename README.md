@@ -1,71 +1,160 @@
 # AniVira
 
-AniVira is a responsive anime discovery and tracking website with a separate no-login content administration page.
+AniVira is a responsive anime discovery and catalogue website with a separate Cloudflare D1-backed Studio. It has no viewer accounts and no mandatory sign-in.
 
-## Public website
+## Features
 
-- Cinematic responsive homepage
-- Trending, seasonal and popular anime shelves
-- Search and catalogue browsing
-- Anime detail dialogs, synopsis, genres and official trailer embeds when available
-- Device-local watchlist
-- Admin-managed anime catalogue surfaced in Explore
-- Admin-managed episode lists and official/authorized source links
-- Episode watched toggles stored on the current device
+### Public website
+- Responsive dark streaming-inspired interface.
+- Trending, seasonal and popular discovery shelves powered by Jikan.
+- Search, catalogue browsing, anime detail dialogs and official trailer embeds.
+- AniVira's own D1 catalogue displayed alongside discovery data.
+- Anime metadata, genres, synopsis, posters and banners.
+- Episode lists and official / authorized source links from D1.
+- Device-local watchlist and watched-state preferences.
+- Mobile navigation, lazy-loaded artwork, loading and error states.
 
-Anime metadata is retrieved from the public Jikan API. AniVira does not host anime episodes or bypass provider access controls.
+### AniVira Studio
+Open `/admin.html` and select **Settings**.
+- Connect to the deployed Worker API.
+- Enter the admin API key for the current browser tab.
+- Dashboard and database health indicator.
+- Create, edit and delete anime.
+- Manage episodes and authorized viewing sources.
+- Export a JSON database backup and import anime records.
+- The Studio writes to Cloudflare D1, not just localStorage.
 
-## Admin / Studio
+There is no user sign-in or public account system. The admin key protects database write operations. It is held in `sessionStorage` for the current tab session; it is never bundled in public website JavaScript.
 
-Open `/admin.html` (or click Studio in the website navigation).
+## Architecture
 
-No user registration or sign-in is required. The current Studio page provides:
-- Dashboard counters
-- Anime CRUD
-- Episode management
-- Official / authorized source management
-- JSON database export and import
-- Local catalogue settings
+- Static frontend: Cloudflare Pages, repository root.
+- Backend: Cloudflare Worker, `worker/index.js`.
+- Database: Cloudflare D1, binding name `DB`.
+- D1 schema: `database/schema.sql`.
+- Initial migration: `database/migrations/0001_init.sql`.
+- Public API configuration: `assets/config.js`.
 
-**Current admin storage mode:** Studio data is saved in the browser's localStorage. It is local to that browser/device and is not a shared database. Clearing browser site data can remove it, so export backups regularly.
+The D1 database is connected by the code but must be provisioned and deployed in your Cloudflare account before it can serve real data. No deployment or database provisioning is performed automatically by committing this repository.
 
-## Database and API scaffold
+## API
 
-The repository includes:
-- `database/schema.sql`: normalized Cloudflare D1 schema for anime, genres, seasons, episodes, sources and featured titles.
-- `worker/index.js`: Cloudflare Worker API with public read endpoints and admin-key-protected write endpoints.
-- `wrangler.toml`: Worker/D1 binding template.
-
-The D1 backend is a deployment scaffold; it is **not connected to the public website or Studio automatically yet**. To activate it:
-
-1. Create a Cloudflare D1 database named `anivira`.
-2. Replace the placeholder `database_id` in `wrangler.toml`.
-3. Apply the schema: `npx wrangler d1 execute anivira --remote --file=database/schema.sql`.
-4. Set Worker secret `ADMIN_API_KEY` to a long random secret.
-5. Set Worker variable `ALLOWED_ORIGIN` to the exact deployed AniVira website origin.
-6. Deploy with `npx wrangler deploy`.
-
-API routes:
+### Public GET endpoints
 - `GET /api/health`
-- `GET /api/anime`
+- `GET /api/anime?limit=24&offset=0&q=...`
 - `GET /api/anime/:id`
-- `POST /api/anime` (admin key)
-- `PATCH /api/anime/:id` (admin key)
-- `DELETE /api/anime/:id` (admin key)
-- `GET /api/episodes?anime_id=...`
-- `POST /api/episodes` (admin key)
-- `GET /api/sources?anime_id=...`
-- `POST /api/sources` (admin key)
+- `GET /api/genres`
+- `GET /api/seasons`
+- `GET /api/featured`
+- `GET /api/episodes?anime_id=...` (omit anime_id for a limited catalogue-wide result)
+- `GET /api/sources?anime_id=...` (omit anime_id for a limited catalogue-wide result)
 
-The admin key is not a user sign-in system. Never place it in public website JavaScript or commit it to Git. The local Studio page currently does not send writes to the D1 API.
+### Admin endpoints (Bearer ADMIN_API_KEY required)
+- `POST /api/admin/anime`
+- `PATCH /api/admin/anime/:id`
+- `DELETE /api/admin/anime/:id`
+- `POST /api/admin/episodes`
+- `PATCH /api/admin/episodes/:id`
+- `DELETE /api/admin/episodes/:id`
+- `POST /api/admin/sources`
+- `PATCH /api/admin/sources/:id`
+- `DELETE /api/admin/sources/:id`
 
-## Run and deploy
+The API uses prepared SQL statements, input validation, HTTPS URL checks, exact-origin CORS allowlisting and protected write routes. Public read routes expose catalogue metadata only. Never add private credentials or unlicensed media URLs.
 
-This is a static frontend. Open `index.html` locally or deploy the repository root to Cloudflare Pages, GitHub Pages or another static host. The Worker is deployed separately.
+## Cloudflare deployment
 
-## Limitations
+### 1. Create the D1 database
 
-- Watchlists and watched episode states are browser-local; there is no account or cross-device sync.
-- Jikan and other public services can rate-limit requests.
-- The D1 Worker scaffold requires Cloudflare configuration and deployment before it becomes a live database.
-- Only official trailers and verified authorized viewing URLs should be added. AniVira does not provide unlicensed episode streams.
+From the repository root:
+
+```bash
+npx wrangler login
+npx wrangler d1 create anivira
+```
+
+Copy the returned database ID into `wrangler.toml`, replacing `REPLACE_WITH_YOUR_CLOUDFLARE_D1_DATABASE_ID`.
+
+### 2. Apply the database migration
+
+```bash
+npx wrangler d1 migrations apply anivira --remote
+```
+
+Alternatively, initialize directly from the complete schema (do one initialization method, not both):
+
+```bash
+npx wrangler d1 execute anivira --remote --file=database/schema.sql
+```
+
+### 3. Configure the Worker
+
+In `wrangler.toml`, replace the Pages origin placeholder under `[vars]` with your exact deployed website origin, for example `https://your-project.pages.dev`.
+
+The D1 binding must remain:
+- Type: D1 database
+- Variable name: `DB`
+- Database: `anivira`
+
+Set the admin secret:
+
+```bash
+npx wrangler secret put ADMIN_API_KEY
+```
+
+Use a long, randomly generated secret. Do not commit it or paste it into `assets/config.js`.
+
+Deploy:
+
+```bash
+npx wrangler deploy
+```
+
+Copy the deployed Worker URL, for example `https://anivira-api.YOUR-SUBDOMAIN.workers.dev`.
+
+### 4. Connect the public website
+
+Edit `assets/config.js` and set:
+
+```js
+window.ANIVIRA_API_BASE = "https://YOUR-WORKER-URL.workers.dev";
+```
+
+Commit and redeploy the Pages site. This URL is public and is not a secret.
+
+### 5. Connect Studio
+
+Open the deployed `/admin.html` page:
+1. Open Settings.
+2. Enter the Worker API URL.
+3. Enter the `ADMIN_API_KEY` secret.
+4. Select Save and test connection.
+5. Confirm the status shows API + D1 connected.
+
+After that, create an anime in Studio and confirm it appears in the public AniVira catalogue.
+
+### 6. Deploy the frontend
+
+Connect the repository to Cloudflare Pages:
+- Production branch: `main`
+- Build command: none
+- Build output directory: `/`
+
+The site is static HTML, CSS and JavaScript. Deploy the Worker separately.
+
+## Environment names
+
+| Name | Cloudflare setting | Purpose |
+|---|---|---|
+| `ALLOWED_ORIGIN` | Worker variable | Exact Pages website origin |
+| `ADMIN_API_KEY` | Worker secret | Protects administrative writes |
+| `DB` | D1 binding | D1 database binding name |
+
+## Important limitations
+
+- AniVira is an anime discovery and catalogue platform. It does not host copyrighted episodes.
+- Viewing sources must be official or otherwise authorized. The website opens these links externally; it does not bypass provider access controls or DRM.
+- Jikan is a public metadata service and may rate-limit requests. The D1 catalogue remains the source of truth for Studio-managed records.
+- Watchlists and watched-state preferences are local to the viewer's browser. There is no account or cross-device synchronization.
+- The Studio can import anime records from JSON. Episode/source backup data is exported; create episode and source records through Studio after import.
+- The Worker and D1 must be deployed and configured in Cloudflare. A successful GitHub commit is not proof of a live deployment.
