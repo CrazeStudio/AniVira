@@ -9,6 +9,17 @@ function makeD1(env) {
   }
 
   async function query(sql, params = []) {
+    const bound = [];
+    let parameterIndex = 0;
+    const restSql = sql.replace(/\?/g, () => {
+      if (parameterIndex >= params.length) throw new Error("SQL parameter mismatch");
+      const value = params[parameterIndex++];
+      if (value === undefined || value === null) return "NULL";
+      bound.push(typeof value === "boolean" ? String(Number(value)) : String(value));
+      return "?";
+    });
+    if (parameterIndex !== params.length) throw new Error("SQL parameter mismatch");
+
     const response = await fetch(
       `https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(accountId)}/d1/database/${encodeURIComponent(databaseId)}/query`,
       {
@@ -17,13 +28,7 @@ function makeD1(env) {
           "authorization": `Bearer ${token}`,
           "content-type": "application/json"
         },
-        body: JSON.stringify({
-          sql,
-          params: params.map(value =>
-            value === undefined || value === null ? null :
-            typeof value === "boolean" ? String(Number(value)) : String(value)
-          )
-        })
+        body: JSON.stringify({ sql: restSql, params: bound })
       }
     );
 
@@ -80,8 +85,11 @@ module.exports = async function handler(req, res) {
   try {
     const body = ["GET", "HEAD"].includes(req.method) ? null : await readBody(req);
     const headers = new Headers();
+    const hopByHop = new Set(["host", "connection", "transfer-encoding", "content-length", "accept-encoding"]);
     for (const [key, value] of Object.entries(req.headers || {})) {
-      if (value !== undefined) headers.set(key, Array.isArray(value) ? value.join(", ") : String(value));
+      if (value !== undefined && !hopByHop.has(key.toLowerCase())) {
+        headers.set(key, Array.isArray(value) ? value.join(", ") : String(value));
+      }
     }
     const host = req.headers.host || "localhost";
     const request = new Request(new URL(req.url || "/", `https://${host}`), {
