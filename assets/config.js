@@ -1,2 +1,1 @@
-// Set this to your deployed AniVira Worker URL after deployment.
-window.ANIVIRA_API_BASE = "";
+// AniVira API is served by the same Vercel deployment.\nwindow.ANIVIRA_API_BASE = window.location.origin;\n
