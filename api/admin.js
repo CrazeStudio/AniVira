@@ -83,8 +83,8 @@ if(a==="addSource"){const id=num(b.anilistId),eid=num(b.episodeId),v=youtubeVide
 }
 if(a==="cleanupUnavailable"){
   const key=process.env.YOUTUBE_API_KEY;if(!key)return json(res,503,{error:"Set YOUTUBE_API_KEY in Vercel to check video availability."});
-  const all=await query("SELECT id,anilist_id,url FROM sources ORDER BY id LIMIT 251",[]);
-  const rows=all.slice(0,250),ids=rows.map(x=>youtubeVideoId(x.url)).filter(Boolean),videos=await getYoutubeVideos(ids,key);
+  const rows=await query("SELECT id,anilist_id,url FROM sources ORDER BY id",[]);
+  const ids=rows.map(x=>youtubeVideoId(x.url)).filter(Boolean),videos=await getYoutubeVideos(ids,key);
   const affected=new Set();let removedSources=0;
   for(const row of rows){
     const videoId=youtubeVideoId(row.url),video=videoId?videos.get(videoId):null;
@@ -111,6 +111,6 @@ if(a==="cleanupUnavailable"){
     removedEpisodes+=Math.max(0,beforeEpisodes-afterEpisodes);
     removedSeasons+=Math.max(0,beforeSeasons-afterSeasons);
   }
-  return json(res,200,{ok:true,checked:rows.length,removedSources,removedEpisodes,removedSeasons,removedAnime,limited:all.length>250});
+  return json(res,200,{ok:true,checked:rows.length,removedSources,removedEpisodes,removedSeasons,removedAnime,limited:false});
 }
 if(a==="removeSource"){const id=num(b.id);await query("DELETE FROM sources WHERE id=?",[id]);return json(res,200,{ok:true});}return json(res,400,{error:"Unknown admin action."});}catch(e){return json(res,500,{error:/playlist|YouTube|configured|validation|quota/i.test(e.message||"")?e.message:"Studio request failed. Check database configuration."});}};
