@@ -1,1 +1,0 @@
-// AniVira API is served by the same Vercel deployment.\nwindow.ANIVIRA_API_BASE = window.location.origin;\n
