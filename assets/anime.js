@@ -13,7 +13,7 @@ function episodeCard(episode, season, anime) {
   const episodeTitle = episode.title || "Episode " + Number(episode.number);
   const languageOptions = sources.map(source => {
     const label = [source.language || "Default audio", source.quality].filter(Boolean).join(" · ");
-    return '<a class="episode-language" href="/watch?id=' + Number(source.id) + '" aria-label="Watch episode ' + Number(episode.number) + ' in ' + esc(source.language || "default audio") + '">' + esc(label) + ' <span aria-hidden="true">↗</span></a>';
+    return '<a class="episode-language" href="/watch?id=' + Number(source.id) + '" aria-label="Open episode video version ' + Number(episode.number) + ' in ' + esc(source.language || "default audio") + '">' + esc(label) + ' <span aria-hidden="true">↗</span></a>';
   }).join("");
 
   return '<article class="episode-card-visual">' +
@@ -24,7 +24,7 @@ function episodeCard(episode, season, anime) {
       '<span class="episode-number">EP ' + Number(episode.number) + '</span>' +
     '</div>' +
     '<div class="episode-card-info"><strong>' + esc(episodeTitle) + '</strong>' +
-      '<small>' + esc(season.title || ("Season " + Number(season.number))) + ' · ' + sources.length + (sources.length === 1 ? ' audio option' : ' audio options') + '</small>' +
+      '<small>' + esc(season.title || ("Season " + Number(season.number))) + ' · ' + sources.length + (sources.length === 1 ? ' video version' : ' video versions') + '</small>' +
       '<div class="episode-language-list">' + (languageOptions || '<span class="muted">No authorized viewing link available.</span>') + '</div>' +
     '</div></article>';
 }
