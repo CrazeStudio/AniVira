@@ -108,7 +108,7 @@ async function load() {
 
     episodeSelect.replaceChildren();
     episodes.forEach(episode => {
-      const matchingSource = sourceForLanguage(episode, source.language);
+      const matchingSource = Number(episode.id) === currentEpisodeId\n        ? { id: Number(source.id) }\n        : sourceForLanguage(episode, source.language);
       if (!matchingSource?.id) return;
       const title = "Episode " + Number(episode.number) + (episode.title ? " · " + episode.title : "");
       addOption(episodeSelect, Number(matchingSource.id), title);
