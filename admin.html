@@ -23,6 +23,13 @@
 <div class="panel"><div class="panel-head"><h2>Import anime from AniList</h2><p class="admin-muted">Search the AniList database and add a title to your catalogue.</p></div>
 <form id="anime-search-form" class="admin-search"><input id="anime-query" placeholder="Search anime title…" maxlength="80" required><button class="admin-button">Search</button></form><div id="anime-results" class="admin-results"></div></div>
 <div class="panel"><div class="panel-head"><h2>Managed anime</h2><p class="admin-muted">Titles currently in your catalogue.</p></div><div id="managed-anime" class="managed-list"></div></div>
+<div class="panel import-panel">
+ <div class="panel-head"><p class="admin-eyebrow">BULK CATALOGUE TOOL</p><h2>Import completed-anime JSON</h2><p class="admin-muted">Upload the watchlist JSON. AniVira will search AniList for each title, suggest matches, and let you correct IDs before importing.</p></div>
+ <div class="import-controls"><label class="import-file-label">JSON file<input id="completed-json-file" type="file" accept=".json,application/json"></label><button id="resolve-completed-json" class="admin-button" disabled>Resolve AniList IDs</button><button id="download-completed-json" class="outline-button" disabled>Download corrected JSON</button></div>
+ <p id="completed-import-status" class="admin-muted" role="status" aria-live="polite">Choose data/completed-anime-100.json to begin.</p>
+ <div id="completed-import-rows" class="completed-import-rows"></div>
+ <div class="import-footer"><span id="completed-import-count" class="admin-muted"></span><button id="import-completed-selected" class="admin-button" disabled>Import selected into catalogue</button></div>
+</div>
 </section>
 
 <section id="episodes-tab" class="admin-card" hidden>
@@ -50,4 +57,4 @@
 <p id="admin-message" class="admin-toast" role="status" aria-live="polite"></p>
 </section>
 </main>
-<script src="/assets/admin.js" defer></script></body></html>
+<script src="/assets/admin.js" defer></script><script src="/assets/completed-import.js" defer></script></body></html>
