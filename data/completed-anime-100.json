@@ -1,0 +1,820 @@
+{
+  "title": "AniVira — 100 Anime Watchlist",
+  "updated_at": "2026-11-17",
+  "total": 100,
+  "editorial_note": "This is a 100-title curation seed, not a claim that all 100 full franchises are complete or currently streamable on one platform. Muse/Ani-One entries are catalogue-listed titles; some have only specific completed seasons while the wider franchise continues. Before publishing a title as Completed, verify that every episode in the selected season/edition is available from the official publisher and mark the season-level completion accurately. The final 12 are additional completed-series/film candidates from other licensed services; verify current India rights and availability before publishing.",
+  "completion_rules": [
+    "Completed season means all expected episodes of that specific season/edition are available.",
+    "Completed franchise means the anime adaptation itself has concluded; do not infer this from a completed season.",
+    "Hindi availability is edition-specific; never label an entire franchise Hindi-dubbed when only one season is dubbed.",
+    "Use official publisher uploads or licensed services only; do not embed fan reuploads."
+  ],
+  "sources": [
+    "https://aniloveindia.com/discover/muse-india-anime/",
+    "https://aniloveindia.com/discover/anione-india-anime/",
+    "https://aniloveindia.com/blog/complete-hindi-seasons/",
+    "https://aniloveindia.com/blog/state-of-hindi-dubbed-anime-2026/"
+  ],
+  "entries": [
+    {
+      "number": 1,
+      "title": "That Time I Got Reincarnated as a Slime",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 2,
+      "title": "SPY x FAMILY",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 3,
+      "title": "Re:ZERO — Starting Life in Another World",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 4,
+      "title": "Assassination Classroom",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 5,
+      "title": "Classroom of the Elite",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 6,
+      "title": "JoJo’s Bizarre Adventure",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 7,
+      "title": "Mob Psycho 100",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 8,
+      "title": "The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 9,
+      "title": "One Punch Man",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 10,
+      "title": "That Time I Got Reincarnated as a Slime: Vision of Coleus",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 11,
+      "title": "SHY",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 12,
+      "title": "My Unique Skill Makes Me OP Even at Level 1",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 13,
+      "title": "School Babysitters",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 14,
+      "title": "Teasing Master Takagi-san",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 15,
+      "title": "Suppose a Kid from the Last Dungeon Boonies Moved to a Starter Town?",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 16,
+      "title": "PUI PUI MOLCAR DRIVING SCHOOL",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 17,
+      "title": "Ippon Again!",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 18,
+      "title": "BOFURI: I Don’t Want to Get Hurt, so I’ll Max Out My Defense",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 19,
+      "title": "Wandering Witch: The Journey of Elaina",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 20,
+      "title": "Kuma Kuma Kuma Bear PUNCH!",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 21,
+      "title": "The Legendary Hero Is Dead!",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 22,
+      "title": "Iseleve",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 23,
+      "title": "Rokudo’s Bad Girls",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 24,
+      "title": "Rent-A-Girlfriend",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 25,
+      "title": "My Next Life as a Villainess: All Routes Lead to Doom! X",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 26,
+      "title": "My Next Life as a Villainess: All Routes Lead to Doom!",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 27,
+      "title": "Sugar Apple Fairy Tale",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 28,
+      "title": "Beast Tamer",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 29,
+      "title": "The Genius Prince’s Guide to Raising a Nation Out of Debt",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 30,
+      "title": "The Magical Revolution of the Reincarnated Princess and the Genius Young Lady",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 31,
+      "title": "Reborn to Master the Blade",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 32,
+      "title": "Campfire Cooking in Another World with My Absurd Skill",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 33,
+      "title": "Lucifer and the Biscuit Hammer",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 34,
+      "title": "Attack on Titan",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 35,
+      "title": "DAN DA DAN",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 36,
+      "title": "Mushoku Tensei: Jobless Reincarnation",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 37,
+      "title": "Welcome to Demon School! Iruma-kun",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 38,
+      "title": "I Parry Everything",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 39,
+      "title": "Cells at Work!",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 40,
+      "title": "Junji Ito Collection",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 41,
+      "title": "I Was Reincarnated as the 7th Prince",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 42,
+      "title": "The World’s Finest Assassin Gets Reincarnated in Another World as an Aristocrat",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 43,
+      "title": "Fairy Tail",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 44,
+      "title": "The God of High School",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 45,
+      "title": "Skeleton Knight in Another World",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 46,
+      "title": "My Gift Lvl 9999 Unlimited Gacha",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 47,
+      "title": "Muv-Luv Alternative",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 48,
+      "title": "Ace of the Diamond actⅡ -Second Season-",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 49,
+      "title": "Black Torch",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 50,
+      "title": "Hitori Bocchi no Marumaru Seikatsu",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 51,
+      "title": "The Exiled Heavy Knight Knows How to Game the System",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 52,
+      "title": "Easygoing Territory Defense by the Optimistic Lord",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 53,
+      "title": "7th Time Loop: The Villainess Enjoys a Carefree Life Married to Her Worst Enemy!",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 54,
+      "title": "I Got a Cheat Skill in Another World and Became Unrivaled in The Real World, Too",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 55,
+      "title": "In/Spectre",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 56,
+      "title": "Cautious Hero: The Hero Is Overpowered but Overly Cautious",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 57,
+      "title": "Mieruko-chan",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 58,
+      "title": "Chained Soldier",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 59,
+      "title": "Noblesse",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 60,
+      "title": "Higehiro: After Being Rejected, I Shaved and Took in a High School Runaway",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 61,
+      "title": "Ushio and Tora",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 62,
+      "title": "Blast of Tempest",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 63,
+      "title": "Danganronpa: The Animation",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 64,
+      "title": "Accel World",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 65,
+      "title": "Dark Gathering",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 66,
+      "title": "Beelzebub",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 67,
+      "title": "Hyouka",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 68,
+      "title": "Made in Abyss",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 69,
+      "title": "Goblin Slayer",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 70,
+      "title": "The Seven Deadly Sins",
+      "platform": "Muse catalogue (Muse India / Muse Asia / Muse Hindi Dub; check exact publisher edition)",
+      "source_status": "listed_in_muse_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "varies_by_edition"
+    },
+    {
+      "number": 71,
+      "title": "Jujutsu Kaisen",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 72,
+      "title": "Overlord",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 73,
+      "title": "Dr. Stone",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 74,
+      "title": "Blue Lock",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 75,
+      "title": "My Hero Academia",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 76,
+      "title": "BLEACH: Thousand-Year Blood War",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 77,
+      "title": "Tamon’s B-Side",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 78,
+      "title": "Yowayowa Sensei",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 79,
+      "title": "KONOSUBA: God’s Blessing on This Wonderful World!",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 80,
+      "title": "Laid-Back Camp",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 81,
+      "title": "Oshi no Ko",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 82,
+      "title": "Rooster Fighter",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 83,
+      "title": "Takopi’s Original Sin",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 84,
+      "title": "I Have a Crush at Work",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 85,
+      "title": "I’m Living with an Otaku NEET Kunoichi!?",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 86,
+      "title": "Saga of Tanya the Evil",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 87,
+      "title": "So What’s Wrong with Getting Reborn as a Goblin?",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 88,
+      "title": "Reincarnated as a Sword",
+      "platform": "Ani-One India",
+      "source_status": "listed_in_anione_india_catalogue",
+      "completion_status": "verify_full_season_episode_count",
+      "language": "Hindi_or_English_subtitles_varies"
+    },
+    {
+      "number": 89,
+      "title": "Fullmetal Alchemist: Brotherhood",
+      "platform": "Other licensed services in India (region and current availability must be checked)",
+      "source_status": "curated_addition_not_verified_on_muse_or_anione",
+      "completion_status": "candidate_completed_series_or_film",
+      "language": "varies"
+    },
+    {
+      "number": 90,
+      "title": "Death Note",
+      "platform": "Other licensed services in India (region and current availability must be checked)",
+      "source_status": "curated_addition_not_verified_on_muse_or_anione",
+      "completion_status": "candidate_completed_series_or_film",
+      "language": "varies"
+    },
+    {
+      "number": 91,
+      "title": "Your Name",
+      "platform": "Other licensed services in India (region and current availability must be checked)",
+      "source_status": "curated_addition_not_verified_on_muse_or_anione",
+      "completion_status": "candidate_completed_series_or_film",
+      "language": "varies"
+    },
+    {
+      "number": 92,
+      "title": "A Silent Voice",
+      "platform": "Other licensed services in India (region and current availability must be checked)",
+      "source_status": "curated_addition_not_verified_on_muse_or_anione",
+      "completion_status": "candidate_completed_series_or_film",
+      "language": "varies"
+    },
+    {
+      "number": 93,
+      "title": "Tokyo Ghoul",
+      "platform": "Other licensed services in India (region and current availability must be checked)",
+      "source_status": "curated_addition_not_verified_on_muse_or_anione",
+      "completion_status": "candidate_completed_series_or_film",
+      "language": "varies"
+    },
+    {
+      "number": 94,
+      "title": "Ghost in the Shell: ARISE",
+      "platform": "Other licensed services in India (region and current availability must be checked)",
+      "source_status": "curated_addition_not_verified_on_muse_or_anione",
+      "completion_status": "candidate_completed_series_or_film",
+      "language": "varies"
+    },
+    {
+      "number": 95,
+      "title": "Steins;Gate",
+      "platform": "Other licensed services in India (region and current availability must be checked)",
+      "source_status": "curated_addition_not_verified_on_muse_or_anione",
+      "completion_status": "candidate_completed_series_or_film",
+      "language": "varies"
+    },
+    {
+      "number": 96,
+      "title": "Code Geass: Lelouch of the Rebellion",
+      "platform": "Other licensed services in India (region and current availability must be checked)",
+      "source_status": "curated_addition_not_verified_on_muse_or_anione",
+      "completion_status": "candidate_completed_series_or_film",
+      "language": "varies"
+    },
+    {
+      "number": 97,
+      "title": "ERASED",
+      "platform": "Other licensed services in India (region and current availability must be checked)",
+      "source_status": "curated_addition_not_verified_on_muse_or_anione",
+      "completion_status": "candidate_completed_series_or_film",
+      "language": "varies"
+    },
+    {
+      "number": 98,
+      "title": "Violet Evergarden",
+      "platform": "Other licensed services in India (region and current availability must be checked)",
+      "source_status": "curated_addition_not_verified_on_muse_or_anione",
+      "completion_status": "candidate_completed_series_or_film",
+      "language": "varies"
+    },
+    {
+      "number": 99,
+      "title": "The Promised Neverland",
+      "platform": "Other licensed services in India (region and current availability must be checked)",
+      "source_status": "curated_addition_not_verified_on_muse_or_anione",
+      "completion_status": "candidate_completed_series_or_film",
+      "language": "varies"
+    },
+    {
+      "number": 100,
+      "title": "Parasyte: The Maxim",
+      "platform": "Other licensed services in India (region and current availability must be checked)",
+      "source_status": "curated_addition_not_verified_on_muse_or_anione",
+      "completion_status": "candidate_completed_series_or_film",
+      "language": "varies"
+    }
+  ]
+}
