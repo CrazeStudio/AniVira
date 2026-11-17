@@ -9,7 +9,7 @@ AniVira is a lightweight **anime discovery and authorized-video viewing website*
 - Search uses AniList's GraphQL API.
 - Anime detail pages show AniList metadata, synopsis, genres, score and authorized viewing options.
 - Viewing pages use YouTube's privacy-enhanced embedded player.
-- The white \`/admin\` studio lets the administrator import anime metadata from AniList and manage approved YouTube video links.
+- The white \`/admin\` studio manages anime, seasons, episodes, authorized YouTube videos and playlist imports (up to 250 items per import).
 - Video uploads, proxying, account registration and viewer profiles are not part of this project.
 
 Only add official or otherwise authorized YouTube videos. A public YouTube URL is not, by itself, proof of permission to distribute or embed the content.
@@ -35,6 +35,7 @@ Add these values in Vercel Project Settings → Environment Variables. Do not co
 - \`CF_API_TOKEN\`: Cloudflare API token with D1 read/write permissions for the database.
 - \`ADMIN_PASSWORD_HASH\`: PBKDF2-SHA256 hash of the administrator password.
 - \`SESSION_SECRET\`: random secret of at least 32 bytes, used to sign the admin session cookie.
+- \`YOUTUBE_API_KEY\`: server-side YouTube Data API v3 key for playlist imports. Never expose it in browser code.
 
 Generate the admin password hash in a trusted Node.js terminal:
 
@@ -59,7 +60,7 @@ Set all five environment variables for both Preview and Production environments 
 3. Create an API token limited to D1 read/write access and add it as \`CF_API_TOKEN\`.
 4. Run \`schema.sql\` in the D1 SQL console.
 
-The API also creates missing tables and indexes on first use. The \`admin_attempts\` table stores HMAC-hashed network identifiers and is used to throttle repeated failed admin logins.
+The API also creates missing tables and indexes on first use and migrates existing databases by adding the nullable \`sources.episode_id\` column. Existing unassigned video links remain available as legacy videos. The \`admin_attempts\` table stores HMAC-hashed network identifiers and is used to throttle repeated failed admin logins.
 
 ## Routes
 

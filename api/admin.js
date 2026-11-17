@@ -1,97 +1,17 @@
-const {
-  query, ensureSchema, json, signingKeyReady, validSession, issueCookie, clearCookie,
-  checkPassword, sameOrigin, loginBlocked, recordLoginFailure, clearLoginFailures, youtubeVideoId
-} = require("./_lib");
-
-const animeFields = "id title { romaji english native } coverImage { large medium } bannerImage description format season seasonYear status genres";
-async function fetchAniListAnime(id) {
-  const response = await fetch("https://graphql.anilist.co", {
-    method:"POST",
-    headers:{"content-type":"application/json","accept":"application/json"},
-    body:JSON.stringify({query:"query($id:Int){Media(id:$id,type:ANIME){" + animeFields + "}}",variables:{id}}),
-    signal:AbortSignal.timeout(12000)
-  });
-  const data = await response.json();
-  if (!response.ok || data.errors || !data.data?.Media) throw new Error("AniList could not load this anime.");
-  return data.data.Media;
-}
-function titleOf(anime) {
-  return anime.title?.english || anime.title?.romaji || anime.title?.native || "Untitled";
-}
-module.exports = async function handler(req,res) {
-  if (req.method !== "POST") return json(res,405,{error:"Method not allowed."});
-  if (!sameOrigin(req)) return json(res,403,{error:"This request was blocked."});
-  try {
-    await ensureSchema();
-    let body = req.body;
-    if (typeof body === "string") body = JSON.parse(body);
-    body = body && typeof body === "object" ? body : {};
-    const action = String(body.action || "");
-
-    if (action === "login") {
-      if (!process.env.ADMIN_PASSWORD_HASH || !signingKeyReady()) return json(res,503,{error:"Admin authentication is not configured."});
-      if (await loginBlocked(req)) return json(res,429,{error:"Too many failed sign-in attempts. Wait 15 minutes before trying again."});
-      const password = typeof body.password === "string" ? body.password : "";
-      if (!password || password.length > 200 || !checkPassword(password)) {
-        await recordLoginFailure(req);
-        return json(res,401,{error:"Incorrect password."});
-      }
-      await clearLoginFailures(req);
-      issueCookie(res);
-      return json(res,200,{ok:true});
-    }
-    if (action === "logout") {
-      clearCookie(res);
-      return json(res,200,{ok:true});
-    }
-    if (!validSession(req)) return json(res,401,{error:"Please sign in again."});
-
-    if (action === "list") {
-      const anime = await query("SELECT anilist_id,title,cover_image FROM anime ORDER BY created_at DESC",[]);
-      const sources = await query("SELECT s.id,s.anilist_id,s.label,s.url,s.language,s.quality,a.title AS anime_title FROM sources s LEFT JOIN anime a ON a.anilist_id=s.anilist_id ORDER BY s.created_at DESC",[]);
-      return json(res,200,{anime,sources});
-    }
-    if (action === "addAnime") {
-      const id = Number(body.anilistId);
-      if (!Number.isSafeInteger(id) || id < 1) return json(res,400,{error:"Invalid AniList ID."});
-      const anime = await fetchAniListAnime(id);
-      await query(
-        "INSERT INTO anime(anilist_id,title,cover_image,banner_image,description,format,season,year,status,genres) VALUES(?,?,?,?,?,?,?,NULLIF(?,''),?,?) ON CONFLICT(anilist_id) DO UPDATE SET title=excluded.title,cover_image=excluded.cover_image,banner_image=excluded.banner_image,description=excluded.description,format=excluded.format,season=excluded.season,year=excluded.year,status=excluded.status,genres=excluded.genres",
-        [anime.id,titleOf(anime),anime.coverImage?.large || "",anime.bannerImage || "",anime.description || "",anime.format || "",anime.season || "",anime.seasonYear ? anime.seasonYear : "",anime.status || "",JSON.stringify(anime.genres || [])]
-      );
-      return json(res,200,{ok:true});
-    }
-    if (action === "removeAnime") {
-      const id = Number(body.anilistId);
-      if (!Number.isSafeInteger(id) || id < 1) return json(res,400,{error:"Invalid AniList ID."});
-      await query("DELETE FROM sources WHERE anilist_id=?",[id]);
-      await query("DELETE FROM anime WHERE anilist_id=?",[id]);
-      return json(res,200,{ok:true});
-    }
-    if (action === "addSource") {
-      const id = Number(body.anilistId);
-      const label = String(body.label || "").trim().slice(0,80);
-      const url = String(body.url || "").trim();
-      const language = String(body.language || "").trim().slice(0,40);
-      const quality = String(body.quality || "").trim().slice(0,30);
-      const videoId = youtubeVideoId(url);
-      if (!Number.isSafeInteger(id) || id < 1 || !label || !videoId || body.authorized !== true) {
-        return json(res,400,{error:"Choose an anime, enter a valid YouTube video URL and confirm that you are authorized to link it."});
-      }
-      const exists = await query("SELECT anilist_id FROM anime WHERE anilist_id=? LIMIT 1",[id]);
-      if (!exists.length) return json(res,400,{error:"Import this anime into the catalogue first."});
-      const canonicalUrl = "https://www.youtube.com/watch?v=" + videoId;
-      await query("INSERT INTO sources(anilist_id,label,url,language,quality) VALUES(?,?,?,?,?)",[id,label,canonicalUrl,language,quality]);
-      return json(res,200,{ok:true});
-    }
-    if (action === "removeSource") {
-      const id = Number(body.id);
-      if (!Number.isSafeInteger(id) || id < 1) return json(res,400,{error:"Invalid video link."});
-      await query("DELETE FROM sources WHERE id=?",[id]);
-      return json(res,200,{ok:true});
-    }
-    return json(res,400,{error:"Unknown admin action."});
-  } catch {
-    return json(res,500,{error:"The studio request failed. Check the database configuration and try again."});
-  }
-};
+const {query,ensureSchema,json,signingKeyReady,validSession,issueCookie,clearCookie,checkPassword,sameOrigin,loginBlocked,recordLoginFailure,clearLoginFailures,youtubeVideoId}=require("./_lib");
+const fields="id title { romaji english native } coverImage { large medium } bannerImage description format season seasonYear status genres";
+async function fetchAnime(id){const r=await fetch("https://graphql.anilist.co",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({query:"query($id:Int){Media(id:$id,type:ANIME){"+fields+"}}",variables:{id}}),signal:AbortSignal.timeout(12000)});const d=await r.json();if(!r.ok||d.errors||!d.data?.Media)throw Error("AniList could not load this anime.");return d.data.Media;}
+const title=x=>x.title?.english||x.title?.romaji||x.title?.native||"Untitled",num=v=>{const n=Number(v);return Number.isSafeInteger(n)&&n>0?n:0;};
+module.exports=async function(req,res){if(req.method!=="POST")return json(res,405,{error:"Method not allowed."});if(!sameOrigin(req))return json(res,403,{error:"This request was blocked."});try{await ensureSchema();let b=req.body;if(typeof b==="string")b=JSON.parse(b);b=b&&typeof b==="object"?b:{};const a=String(b.action||"");
+if(a==="login"){if(!process.env.ADMIN_PASSWORD_HASH||!signingKeyReady())return json(res,503,{error:"Admin authentication is not configured."});if(await loginBlocked(req))return json(res,429,{error:"Too many failed sign-in attempts."});const p=typeof b.password==="string"?b.password:"";if(!p||p.length>200||!checkPassword(p)){await recordLoginFailure(req);return json(res,401,{error:"Incorrect password."});}await clearLoginFailures(req);issueCookie(res);return json(res,200,{ok:true});}
+if(a==="logout"){clearCookie(res);return json(res,200,{ok:true});}if(!validSession(req))return json(res,401,{error:"Please sign in again."});
+if(a==="list"){const [anime,seasons,episodes,sources]=await Promise.all([query("SELECT anilist_id,title,cover_image FROM anime ORDER BY created_at DESC",[]),query("SELECT id,anilist_id,season_number,title FROM seasons ORDER BY anilist_id,season_number",[]),query("SELECT e.id,s.anilist_id,e.season_id,e.episode_number,e.title FROM episodes e JOIN seasons s ON s.id=e.season_id ORDER BY s.anilist_id,s.season_number,e.episode_number",[]),query("SELECT s.id,s.anilist_id,s.episode_id,s.label,s.url,s.language,s.quality,a.title AS anime_title,e.episode_number,e.title AS episode_title,se.season_number FROM sources s LEFT JOIN anime a ON a.anilist_id=s.anilist_id LEFT JOIN episodes e ON e.id=s.episode_id LEFT JOIN seasons se ON se.id=e.season_id ORDER BY s.created_at DESC",[])]);return json(res,200,{anime,seasons,episodes,sources});}
+if(a==="addAnime"){const id=num(b.anilistId);if(!id)return json(res,400,{error:"Invalid AniList ID."});const x=await fetchAnime(id);await query("INSERT INTO anime(anilist_id,title,cover_image,banner_image,description,format,season,year,status,genres) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(anilist_id) DO UPDATE SET title=excluded.title,cover_image=excluded.cover_image,banner_image=excluded.banner_image,description=excluded.description,format=excluded.format,season=excluded.season,year=excluded.year,status=excluded.status,genres=excluded.genres",[x.id,title(x),x.coverImage?.large||"",x.bannerImage||"",x.description||"",x.format||"",x.season||"",x.seasonYear||null,x.status||"",JSON.stringify(x.genres||[])]);return json(res,200,{ok:true});}
+if(a==="removeAnime"){const id=num(b.anilistId);if(!id)return json(res,400,{error:"Invalid anime."});await query("DELETE FROM sources WHERE anilist_id=?",[id]);await query("DELETE FROM episodes WHERE season_id IN (SELECT id FROM seasons WHERE anilist_id=?)",[id]);await query("DELETE FROM seasons WHERE anilist_id=?",[id]);await query("DELETE FROM anime WHERE anilist_id=?",[id]);return json(res,200,{ok:true});}
+if(a==="addSeason"){const id=num(b.anilistId),n=num(b.seasonNumber);if(!id||!n)return json(res,400,{error:"Choose anime and season number."});if(!(await query("SELECT 1 FROM anime WHERE anilist_id=?",[id])).length)return json(res,400,{error:"Import anime first."});await query("INSERT INTO seasons(anilist_id,season_number,title) VALUES(?,?,?) ON CONFLICT(anilist_id,season_number) DO UPDATE SET title=excluded.title",[id,n,String(b.title||"Season "+n).slice(0,100)]);return json(res,200,{ok:true});}
+if(a==="removeSeason"){const id=num(b.id);await query("DELETE FROM sources WHERE episode_id IN (SELECT id FROM episodes WHERE season_id=?)",[id]);await query("DELETE FROM episodes WHERE season_id=?",[id]);await query("DELETE FROM seasons WHERE id=?",[id]);return json(res,200,{ok:true});}
+if(a==="addEpisode"){const sid=num(b.seasonId),n=num(b.episodeNumber),t=String(b.title||"").trim().slice(0,160);if(!sid||!n||!t)return json(res,400,{error:"Choose season, episode number and title."});await query("INSERT INTO episodes(season_id,episode_number,title) VALUES(?,?,?) ON CONFLICT(season_id,episode_number) DO UPDATE SET title=excluded.title",[sid,n,t]);return json(res,200,{ok:true});}
+if(a==="removeEpisode"){const id=num(b.id);await query("DELETE FROM sources WHERE episode_id=?",[id]);await query("DELETE FROM episodes WHERE id=?",[id]);return json(res,200,{ok:true});}
+if(a==="addSource"){const id=num(b.anilistId),eid=num(b.episodeId),v=youtubeVideoId(b.url),label=String(b.label||"").trim().slice(0,80);if(!id||!eid||!v||!label||b.authorized!==true)return json(res,400,{error:"Select an episode, valid YouTube URL and confirm authorization."});if(!(await query("SELECT e.id FROM episodes e JOIN seasons s ON s.id=e.season_id WHERE e.id=? AND s.anilist_id=?",[eid,id])).length)return json(res,400,{error:"Episode does not belong to this anime."});await query("INSERT OR IGNORE INTO sources(anilist_id,episode_id,label,url,language,quality) VALUES(?,?,?,?,?,?)",[id,eid,label,"https://www.youtube.com/watch?v="+v,String(b.language||"").slice(0,40),String(b.quality||"").slice(0,30)]);return json(res,200,{ok:true});}
+if(a==="importPlaylist"){const id=num(b.anilistId),sid=num(b.seasonId),m=String(b.playlist||"").match(/(?:[?&]list=|^)([A-Za-z0-9_-]{10,})/);if(!id||!sid||!m||b.authorized!==true)return json(res,400,{error:"Choose anime and season, enter a playlist URL and confirm authorization."});if(!(await query("SELECT id FROM seasons WHERE id=? AND anilist_id=?",[sid,id])).length)return json(res,400,{error:"Season mismatch."});const key=process.env.YOUTUBE_API_KEY;if(!key)return json(res,503,{error:"Set YOUTUBE_API_KEY in Vercel to enable playlist import."});let token="",items=[],pages=0;do{const u=new URL("https://www.googleapis.com/youtube/v3/playlistItems");for(const [k,v] of Object.entries({part:"snippet,contentDetails",playlistId:m[1],maxResults:"50",key}))u.searchParams.set(k,v);if(token)u.searchParams.set("pageToken",token);const r=await fetch(u,{signal:AbortSignal.timeout(12000)}),d=await r.json();if(!r.ok)throw Error(d.error?.message||"Playlist request failed.");items.push(...(d.items||[]));token=d.nextPageToken||"";pages++;}while(token&&pages<5);let imported=0;for(const x of items){const v=x.contentDetails?.videoId||x.snippet?.resourceId?.videoId,n=Number(x.snippet?.position)+1;if(!/^[A-Za-z0-9_-]{11}$/.test(v||"")||!Number.isSafeInteger(n)||n<1)continue;await query("INSERT OR IGNORE INTO episodes(season_id,episode_number,title) VALUES(?,?,?)",[sid,n,String(x.snippet?.title||"Episode "+n).slice(0,160)]);const e=await query("SELECT id FROM episodes WHERE season_id=? AND episode_number=?",[sid,n]);if(!e.length)continue;await query("INSERT OR IGNORE INTO sources(anilist_id,episode_id,label,url,language,quality) VALUES(?,?,?,?,?,?)",[id,Number(e[0].id),String(x.snippet?.title||"Episode "+n).slice(0,80),"https://www.youtube.com/watch?v="+v,String(b.language||"").slice(0,40),String(b.quality||"").slice(0,30)]);imported++;}return json(res,200,{ok:true,imported,scanned:items.length,limited:!!token});}
+if(a==="removeSource"){const id=num(b.id);await query("DELETE FROM sources WHERE id=?",[id]);return json(res,200,{ok:true});}return json(res,400,{error:"Unknown admin action."});}catch(e){return json(res,500,{error:/playlist|YouTube|configured/i.test(e.message||"")?e.message:"Studio request failed. Check database configuration."});}};
