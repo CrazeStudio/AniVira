@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS anime (anilist_id INTEGER PRIMARY KEY,title TEXT NOT NULL,cover_image TEXT,banner_image TEXT,description TEXT,format TEXT,season TEXT,year INTEGER,status TEXT,genres TEXT,created_at TEXT DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS sources (id INTEGER PRIMARY KEY AUTOINCREMENT,anilist_id INTEGER NOT NULL,label TEXT NOT NULL,url TEXT NOT NULL,language TEXT,quality TEXT,created_at TEXT DEFAULT CURRENT_TIMESTAMP);
+CREATE INDEX IF NOT EXISTS idx_sources_anime ON sources(anilist_id);
