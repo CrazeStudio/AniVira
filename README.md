@@ -1,53 +1,98 @@
 # AniVira
 
-A lightweight anime discovery site. Public anime metadata and catalogues come from AniList; administrators manage the site's anime catalogue and viewing links in a separate white admin studio. The public site is dark and restrained.
+AniVira is a lightweight **anime discovery and authorized-video viewing website**. It is not an anime-file host, scraper, or unofficial streaming-link aggregator.
 
-## Branch workflow
-- `Development`: active work and preview deployments.
-- `main`: production publishing branch. Merge tested Development changes into main to publish.
+## What AniVira does
 
-## Stack
-- Static HTML, CSS and browser JavaScript.
-- Vercel Node.js serverless functions under `/api`.
-- Cloudflare D1 accessed through the Cloudflare REST API.
-- AniList GraphQL API for anime search and catalogue metadata.
+- The public homepage shows AniList-powered catalogues: Trending, Popular, This Season, Top Rated and Recently Updated.
+- The homepage also shows the administrator-curated AniVira Collection and all configured viewing links.
+- Search uses AniList's GraphQL API.
+- Anime detail pages show AniList metadata, synopsis, genres, score and authorized viewing options.
+- Viewing pages use YouTube's privacy-enhanced embedded player.
+- The white \`/admin\` studio lets the administrator import anime metadata from AniList and manage approved YouTube video links.
+- Video uploads, proxying, account registration and viewer profiles are not part of this project.
+
+Only add official or otherwise authorized YouTube videos. A public YouTube URL is not, by itself, proof of permission to distribute or embed the content.
+
+## Languages and architecture
+
+| Area | Technology |
+|---|---|
+| Website and admin interface | HTML5, CSS3, vanilla JavaScript |
+| Backend | JavaScript / Node.js Vercel serverless functions |
+| Database | Cloudflare D1 (SQLite-compatible SQL) |
+| Anime data | AniList GraphQL API |
+| Hosting and clean routes | Vercel, configured in \`vercel.json\` |
+
+No frontend framework or build step is required. Static pages live at the repository root, browser scripts and styles are in \`assets/\`, and serverless endpoints are in \`api/\`.
 
 ## Environment variables
-Set these in Vercel (and keep them out of Git):
-- `CF_ACCOUNT_ID`: Cloudflare account ID.
-- `CF_DATABASE_ID`: D1 database UUID.
-- `CF_API_TOKEN`: Cloudflare API token with D1 read/write permissions for this database.
-- `ADMIN_PASSWORD_HASH`: PBKDF2-SHA256 password hash in the format `pbkdf2-sha256$iterations$salt_base64$hash_base64`.
-- `SESSION_SECRET`: long random secret used to sign the HttpOnly admin session cookie (at least 32 random bytes recommended).
 
-Generate a password hash locally with Node.js:
+Add these values in Vercel Project Settings → Environment Variables. Do not commit secrets to GitHub.
 
-```js
-const crypto = require('node:crypto');
-const password = process.argv[2];
-if (!password) throw new Error('Pass a password as the first argument');
-const salt = crypto.randomBytes(16);
-const hash = crypto.pbkdf2Sync(password, salt, 310000, 32, 'sha256');
-console.log(['pbkdf2-sha256', 310000, salt.toString('base64'), hash.toString('base64')].join('$'));
-```
+- \`CF_ACCOUNT_ID\`: Cloudflare account ID.
+- \`CF_DATABASE_ID\`: Cloudflare D1 database ID.
+- \`CF_API_TOKEN\`: Cloudflare API token with D1 read/write permissions for the database.
+- \`ADMIN_PASSWORD_HASH\`: PBKDF2-SHA256 hash of the administrator password.
+- \`SESSION_SECRET\`: random secret of at least 32 bytes, used to sign the admin session cookie.
 
-Run with `node hash-password.js 'your-long-password'`, then store the printed value as `ADMIN_PASSWORD_HASH`. Do not commit the generated hash or password.
+Generate the admin password hash in a trusted Node.js terminal:
 
-Generate `SESSION_SECRET` with `node -e "console.log(require('node:crypto').randomBytes(48).toString('hex'))"`.
+\`\`\`sh
+node scripts/hash-password.js
+\`\`\`
 
-## D1 setup
-Create a Cloudflare D1 database, then execute the SQL in `schema.sql` in the D1 console. The API also creates the tables/index automatically on first request. No viewer accounts are implemented.
+The script prompts for the password without echoing it, then prints the PBKDF2 hash. Save that output as \`ADMIN_PASSWORD_HASH\`. Never put the plain password or generated hash in source code.
+
+Generate a session secret with:
+
+\`\`\`sh
+node -e "console.log(require('node:crypto').randomBytes(48).toString('hex'))"
+\`\`\`
+
+Set all five environment variables for both Preview and Production environments as appropriate. Redeploy after changing environment variables.
+
+## Cloudflare D1 setup
+
+1. Create a D1 database in the Cloudflare dashboard.
+2. Copy its database ID and your Cloudflare account ID into Vercel.
+3. Create an API token limited to D1 read/write access and add it as \`CF_API_TOKEN\`.
+4. Run \`schema.sql\` in the D1 SQL console.
+
+The API also creates missing tables and indexes on first use. The \`admin_attempts\` table stores HMAC-hashed network identifiers and is used to throttle repeated failed admin logins.
 
 ## Routes
-- `/`: homepage and catalogues.
-- `/search`: AniList search.
-- `/admin`: private admin studio.
-- `/api/anilist?action=home`: homepage catalogues and configured sources.
-- `/api/anilist?action=search&q=...`: AniList search.
-- `/api/admin`: authenticated admin actions.
+
+- \`/\` — public homepage and catalogue sections.
+- \`/search\` — anime search.
+- \`/anime?id=ANILIST_ID\` — anime detail page.
+- \`/watch?id=SOURCE_ID\` — YouTube embedded viewing page.
+- \`/admin\` — private admin studio.
+- \`/rights\` — project purpose and video-link policy.
+- \`/api/anilist?action=home\` — public catalogues, managed collection and video links.
+- \`/api/anilist?action=search&q=TITLE\` — AniList search.
+- \`/api/anilist?action=detail&id=ANILIST_ID\` — anime metadata and available videos.
+- \`/api/anilist?action=source&id=SOURCE_ID\` — validated YouTube playback information.
+- \`/api/admin\` — same-origin, session-protected admin operations.
 
 ## Deployment
-Import this repository into Vercel. Set the environment variables for the deployment environment. Use `Development` for preview builds and set `main` as the production branch. AniList is a third-party metadata service; viewing URLs are supplied and managed by the site administrator. Only add sources you have permission to link to.
 
-## Security notes
-The admin password is never shipped to the browser. Successful login sets a signed, HttpOnly, Secure, SameSite=Strict cookie. Admin writes require the session and same-origin requests. Use HTTPS, keep Cloudflare tokens private, and rotate the session secret to invalidate existing sessions. This initial version does not include persistent login throttling or user accounts.
+1. Import \`CrazeStudio/AniVira\` into Vercel.
+2. Set \`main\` as the Production Branch.
+3. Keep \`Development\` as the working branch and use its Preview deployment for testing.
+4. Add all environment variables and redeploy.
+5. Visit the Preview URL, test search and the admin flow, then verify the D1 catalogue.
+6. Merge the tested \`Development\` changes into \`main\` only when ready to publish.
+
+The repository's \`vercel.json\` configures clean routes and baseline browser security headers. Vercel automatically detects the Node.js functions in \`api/\`; no custom build command is needed.
+
+## Security and operational notes
+
+- Admin passwords are verified server-side using PBKDF2-SHA256.
+- The admin session is signed and stored in an HttpOnly, Secure, SameSite=Strict cookie.
+- Admin POST requests require a same-origin Origin header and a valid session (except login/logout).
+- Repeated failed logins are throttled using D1; only an HMAC hash of the network identifier is stored.
+- Viewing URLs are accepted only when they resolve to a YouTube video ID. Other hosts and playlist-only links are rejected.
+- The embedded player uses \`youtube-nocookie.com\`; YouTube still controls playback, availability, advertising and regional restrictions.
+- AniVira does not verify copyright ownership automatically. The administrator is responsible for confirming authorization before adding each video.
+- Keep the Cloudflare token and session secret private. Rotating \`SESSION_SECRET\` invalidates existing admin sessions.
