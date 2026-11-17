@@ -16,6 +16,28 @@ $("#season-anime").addEventListener("change",refreshSeasons);$("#episode-season"
 $("#season-form").addEventListener("submit",async e=>{e.preventDefault();try{await api({action:"addSeason",anilistId:+$("#season-anime").value,seasonNumber:+$("#season-number").value,title:$("#season-title").value});e.target.reset();await refresh();msg("Season saved.");}catch(x){msg(x.message,1);}});
 $("#episode-form").addEventListener("submit",async e=>{e.preventDefault();try{await api({action:"addEpisode",seasonId:+$("#episode-season").value,episodeNumber:+$("#episode-number").value,title:$("#episode-title").value});e.target.reset();await refresh();msg("Episode saved.");}catch(x){msg(x.message,1);}});
 $("#source-form").addEventListener("submit",async e=>{e.preventDefault();try{await api({action:"addSource",anilistId:+$("#source-anime").value,episodeId:+$("#source-episode").value,label:$("#source-label").value,url:$("#source-url").value,language:$("#source-language").value,quality:$("#source-quality").value,authorized:$("#source-authorized").checked});e.target.reset();await refresh();msg("Video attached to episode.");}catch(x){msg(x.message,1);}});
-$("#playlist-form").addEventListener("submit",async e=>{e.preventDefault();const b=e.target.querySelector("button");b.disabled=true;b.textContent="Importing…";try{const d=await api({action:"importPlaylist",anilistId:+$("#playlist-anime").value,seasonId:+$("#playlist-season").value,playlist:$("#playlist-url").value,language:$("#playlist-language").value,quality:$("#playlist-quality").value,authorized:$("#playlist-authorized").checked});await refresh();msg("Imported "+d.imported+" videos from "+d.scanned+" entries."+(d.limited?" Reached the 250-video limit.":""));}catch(x){msg(x.message,1);}finally{b.disabled=false;b.textContent="Import playlist";}});
-document.addEventListener("click",async e=>{const b=e.target.closest("[data-add],[data-remove],[data-source-remove],[data-episode-remove]");if(!b)return;if((b.dataset.remove||b.dataset.sourceRemove||b.dataset.episodeRemove)&&!confirm("Remove this item? This cannot be undone."))return;try{if(b.dataset.add)await api({action:"addAnime",anilistId:+b.dataset.add});if(b.dataset.remove)await api({action:"removeAnime",anilistId:+b.dataset.remove});if(b.dataset.sourceRemove)await api({action:"removeSource",id:+b.dataset.sourceRemove});if(b.dataset.episodeRemove)await api({action:"removeEpisode",id:+b.dataset.episodeRemove});await refresh();msg("Changes saved.");}catch(x){msg(x.message,1);}});
+$("#playlist-form").addEventListener("submit",async e=>{e.preventDefault();const b=e.target.querySelector("button");b.disabled=true;b.textContent="Importing…";try{const d=await api({action:"importPlaylist",anilistId:+$("#playlist-anime").value,seasonId:+$("#playlist-season").value,playlist:$("#playlist-url").value,language:$("#playlist-language").value,quality:$("#playlist-quality").value,authorized:$("#playlist-authorized").checked});await refresh();msg("Imported "+d.imported+". Skipped: "+d.skippedUnavailable+" unavailable, "+d.skippedUnnumbered+" without episode numbers, "+d.duplicates+" duplicates."+(d.limited?" Reached the 250-entry limit.":""));}catch(x){msg(x.message,1);}finally{b.disabled=false;b.textContent="Import playlist";}});
+document.addEventListener("click",async e=>{
+  const b=e.target.closest("[data-cleanup],[data-add],[data-remove],[data-source-remove],[data-episode-remove]");
+  if(!b)return;
+  if(b.dataset.cleanup){
+    if(!confirm("Check up to 250 saved YouTube videos. Deleted, private, non-embeddable or India-blocked videos will be removed. Empty episodes/seasons and anime with no remaining videos will also be deleted."))return;
+    b.disabled=true;
+    try{
+      const d=await api({action:"cleanupUnavailable"});
+      await refresh();
+      msg("Checked "+d.checked+" videos; removed "+d.removedSources+" unavailable links, "+d.removedEpisodes+" empty episodes, "+d.removedSeasons+" empty seasons and "+d.removedAnime+" anime."+(d.limited?" Run again to check the remaining sources.":""));
+    }catch(x){msg(x.message,1);}
+    finally{b.disabled=false;}
+    return;
+  }
+  if((b.dataset.remove||b.dataset.sourceRemove||b.dataset.episodeRemove)&&!confirm("Remove this item? This cannot be undone."))return;
+  try{
+    if(b.dataset.add)await api({action:"addAnime",anilistId:+b.dataset.add});
+    if(b.dataset.remove)await api({action:"removeAnime",anilistId:+b.dataset.remove});
+    if(b.dataset.sourceRemove)await api({action:"removeSource",id:+b.dataset.sourceRemove});
+    if(b.dataset.episodeRemove)await api({action:"removeEpisode",id:+b.dataset.episodeRemove});
+    await refresh();msg("Changes saved.");
+  }catch(x){msg(x.message,1);}
+});
 (async()=>{try{await refresh();$("#login-panel").hidden=true;$("#dashboard").hidden=false;}catch{$("#login-panel").hidden=false;$("#dashboard").hidden=true;}})();
