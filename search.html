@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#09090b">
+  <meta name="description" content="Search anime titles in the AniList catalogue with AniVira.">
+  <title>Search anime — AniVira</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/"><span class="brand-mark">A</span>AniVira</a><nav aria-label="Main navigation"><a href="/">Discover</a><a class="nav-active" href="/search">Search</a><a href="/rights">About</a></nav><a class="nav-search" href="/search" aria-label="Search anime">⌕</a></header>
+  <main class="shell search-shell">
+    <p class="eyebrow">FIND YOUR NEXT SERIES</p><h1 class="page-title">Search anime</h1>
+    <form id="search-form" class="search-form" role="search"><label class="visually-hidden" for="query">Anime title</label><input id="query" type="search" placeholder="Search by anime title…" autocomplete="off" maxlength="80" required><button type="submit">Search <span aria-hidden="true">→</span></button></form>
+    <div id="search-status" class="muted" role="status">Search the AniList catalogue by English, Romaji or native title.</div>
+    <div id="results" class="anime-grid"></div>
+  </main>
+  <footer class="footer"><a class="footer-brand" href="/">AniVira</a><span>Anime information powered by AniList.</span><a href="/rights">Rights &amp; information</a></footer>
+  <script src="/assets/search.js" defer></script>
+</body>
+</html>

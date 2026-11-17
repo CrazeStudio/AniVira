@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#fff"><meta name="robots" content="noindex,nofollow"><title>Studio — AniVira</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/styles.css"></head>
+<body class="admin-body">
+  <header class="admin-top"><a class="admin-brand" href="/">AniVira <span>STUDIO</span></a><a href="/" class="quiet-link">← Public website</a></header>
+  <main class="admin-shell">
+    <section id="login-panel" class="login-panel"><p class="admin-eyebrow">PRIVATE WORKSPACE</p><h1>Studio login</h1><p class="admin-muted">Sign in to manage the anime catalogue and authorized YouTube links.</p><form id="login-form"><label for="password">Admin password</label><input id="password" type="password" autocomplete="current-password" minlength="1" maxlength="200" required><button class="admin-button" type="submit">Sign in</button><p id="login-error" class="error" role="alert"></p></form></section>
+    <section id="dashboard" hidden>
+      <div class="admin-heading"><div><p class="admin-eyebrow">CONTENT MANAGEMENT</p><h1>Studio</h1><p class="admin-muted">Import metadata from AniList and manage authorized video links.</p></div><button id="logout" class="outline-button" type="button">Sign out</button></div>
+      <div class="admin-tabs" role="tablist" aria-label="Studio sections"><button class="tab active" type="button" data-tab="anime" role="tab" aria-selected="true">Anime catalogue</button><button class="tab" type="button" data-tab="sources" role="tab" aria-selected="false">YouTube sources</button></div>
+      <section id="anime-tab" class="admin-card" role="tabpanel"><div class="admin-card-heading"><div><h2>Import anime</h2><p class="admin-muted">Search AniList and add its metadata to your site catalogue.</p></div></div><form id="anime-search-form" class="admin-search"><label class="visually-hidden" for="anime-query">Search AniList</label><input id="anime-query" placeholder="Search by anime title…" maxlength="80" required><button class="admin-button" type="submit">Search AniList</button></form><div id="anime-results" class="admin-results"></div><h2 class="subheading">Managed anime</h2><div id="managed-anime" class="managed-list"></div></section>
+      <section id="sources-tab" class="admin-card" role="tabpanel" hidden><div class="admin-card-heading"><div><h2>Add an authorized video</h2><p class="admin-muted">Only add official or otherwise authorized YouTube videos. No other video hosts are accepted.</p></div></div>
+        <form id="source-form" class="source-form">
+          <label>Anime<select id="source-anime" required><option value="">Choose anime</option></select></label>
+          <label>Source label<input id="source-label" placeholder="Official channel / episode name" maxlength="80" required></label>
+          <label>YouTube video URL<input id="source-url" type="url" placeholder="https://www.youtube.com/watch?v=…" required></label>
+          <div class="form-row"><label>Audio / language<input id="source-language" placeholder="Japanese / Hindi / English" maxlength="40"></label><label>Quality<input id="source-quality" placeholder="1080p / 720p" maxlength="30"></label></div>
+          <label class="confirm-row"><input id="source-authorized" type="checkbox" required><span>I confirm that I have permission to link to and embed this video.</span></label>
+          <button class="admin-button" type="submit">Save video link</button>
+        </form>
+        <h2 class="subheading">Managed video links</h2><div id="managed-sources" class="managed-list"></div>
+      </section>
+      <p id="admin-message" class="admin-muted" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="/assets/admin.js" defer></script>
+</body>
+</html>

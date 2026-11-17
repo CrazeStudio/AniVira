@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#09090b">
+  <meta name="description" content="Discover anime with AniVira. Browse AniList-powered catalogues and find authorized viewing links.">
+  <title>AniVira — Discover anime</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="AniVira home"><span class="brand-mark">A</span>AniVira</a>
+    <nav aria-label="Main navigation"><a class="nav-active" href="/">Discover</a><a href="/search">Search</a><a href="/rights">About</a></nav>
+    <a class="nav-search" href="/search" aria-label="Search anime">⌕</a>
+  </header>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">YOUR ANIME SPACE</p>
+        <h1>Stories worth<br><span>getting lost in.</span></h1>
+        <p class="hero-description">Explore anime by season, popularity and community rating. Find official and authorized viewing links in one place.</p>
+        <a class="primary-link" href="/search">Explore anime <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="hero-note"><span class="hero-note-dot"></span>Anime discovery, made simple</div>
+    </section>
+    <section class="section" aria-labelledby="catalogue-label">
+      <div class="section-heading"><div><p class="eyebrow">THE CATALOGUE</p><h2 id="catalogue-label">Explore anime</h2></div><a class="text-link" href="/search">Search all anime <span aria-hidden="true">→</span></a></div>
+      <div id="catalogues" aria-live="polite"><p class="loading">Loading catalogues from AniList…</p></div>
+    </section>
+    <section class="section source-section" aria-labelledby="sources-title">
+      <div class="section-heading"><div><p class="eyebrow">WATCHING OPTIONS</p><h2 id="sources-title">Available viewing links</h2><p class="section-description">Links added by the AniVira studio. Videos play through YouTube’s embedded player.</p></div></div>
+      <div id="all-sources" class="source-list"><p class="muted">Loading viewing links…</p></div>
+    </section>
+  </main>
+  <footer class="footer">
+    <a class="footer-brand" href="/">AniVira</a>
+    <span>Anime metadata by AniList. Video playback is provided by YouTube; AniVira does not host video files.</span>
+    <a href="/rights">Rights &amp; information</a>
+  </footer>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>

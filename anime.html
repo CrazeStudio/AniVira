@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#09090b">
+  <meta name="description" content="Anime details and authorized viewing options on AniVira.">
+  <title>Anime details — AniVira</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/"><span class="brand-mark">A</span>AniVira</a><nav aria-label="Main navigation"><a href="/">Discover</a><a href="/search">Search</a><a href="/rights">About</a></nav><a class="nav-search" href="/search" aria-label="Search anime">⌕</a></header>
+  <main class="shell detail-shell">
+    <a class="back-link" href="/">← Back to discover</a>
+    <div id="detail-state" class="loading" role="status">Loading anime details…</div>
+    <article id="anime-detail" hidden>
+      <section class="detail-hero">
+        <img id="detail-banner" class="detail-banner" alt="" hidden>
+        <div class="detail-main">
+          <img id="detail-cover" class="detail-cover" alt="">
+          <div class="detail-copy"><p class="eyebrow">ANIME DETAILS</p><h1 id="detail-title" class="detail-title"></h1><p id="detail-alt-title" class="detail-alt-title"></p><div id="detail-meta" class="detail-meta"></div><div id="detail-genres" class="genre-list"></div></div>
+        </div>
+      </section>
+      <section class="detail-content">
+        <div class="detail-description"><p class="eyebrow">THE STORY</p><h2>Synopsis</h2><p id="detail-description" class="synopsis"></p><a id="anilist-link" class="text-link" target="_blank" rel="noopener noreferrer">View metadata on AniList ↗</a></div>
+        <aside class="detail-viewing"><p class="eyebrow">WATCHING OPTIONS</p><h2>Available videos</h2><div id="detail-sources" class="detail-source-list"></div></aside>
+      </section>
+    </article>
+  </main>
+  <footer class="footer"><a class="footer-brand" href="/">AniVira</a><span>Videos are embedded from YouTube. Availability and playback are controlled by YouTube and the video publisher.</span><a href="/rights">Rights &amp; information</a></footer>
+  <script src="/assets/anime.js" defer></script>
+</body>
+</html>
