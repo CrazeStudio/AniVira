@@ -91,6 +91,12 @@
       render();
     }
     importing=false;statusNode.textContent="Import complete: "+success+" added or updated, "+failed+" failed. Download the corrected JSON to preserve the AniList IDs.";updateCount();
-    const managed=document.querySelector("#managed-anime");if(managed)managed.innerHTML='<p class="admin-muted">Reload the Studio page to refresh the managed-anime list and statistics.</p>';
+    try {
+      const state=await adminPost({action:"list"});
+      const set=(id,value)=>{const node=document.querySelector(id);if(node)node.textContent=value;};
+      set("#stat-anime",state.anime.length);set("#stat-seasons",state.seasons.length);set("#stat-episodes",state.episodes.length);set("#stat-sources",state.sources.length);
+      const managed=document.querySelector("#managed-anime");
+      if(managed)managed.innerHTML=(state.anime||[]).map(x=>'<div class="managed-row"><div><strong>'+esc(x.title)+'</strong><small>AniList '+Number(x.anilist_id)+'</small></div><button class="small-danger" data-remove="'+Number(x.anilist_id)+'">Remove</button></div>').join("")||'<p class="admin-muted">No anime imported yet.</p>';
+    } catch (_) {}
   });
 })();
