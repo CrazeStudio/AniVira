@@ -8,13 +8,21 @@ function animeCard(a) {
 }
 async function loadHome() {
   const root = $("#catalogues");
-  const all = $("#all-sources");
   try {
     const response = await fetch("/api/anilist?action=home", {headers: {"accept":"application/json"}});
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Catalogue request failed.");
     const seen = new Set();
-    root.innerHTML = (data.sections || []).map((section) => '<section class="catalogue"><div class="catalogue-head"><h2>' + esc(section.title) + '</h2><a class="text-link" href="/search">Explore all →</a></div><div class="anime-grid">' + (section.items || []).filter((anime) => { const id = Number(anime.id); if (seen.has(id)) return false; seen.add(id); return true; }).map(animeCard).join("") + "</div></section>").join("") || '<p class="empty">No catalogue sections are available right now.</p>';
+    const visibleSections = (data.sections || []).map((section) => ({
+      ...section,
+      items: (section.items || []).filter((anime) => {
+        const id = Number(anime.id);
+        if (seen.has(id)) return false;
+        seen.add(id);
+        return true;
+      })
+    })).filter((section) => section.items.length);
+    root.innerHTML = visibleSections.map((section) => '<section class="catalogue"><div class="catalogue-head"><h2>' + esc(section.title) + '</h2><a class="text-link" href="/search">Explore all →</a></div><div class="anime-grid">' + section.items.map(animeCard).join("") + "</div></section>").join("") || '<p class="empty">No catalogue sections are available right now.</p>';
   } catch (error) {
     root.innerHTML = '<p class="empty">Could not load AniList catalogues. Please try again later.</p>';
   }
