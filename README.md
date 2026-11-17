@@ -93,7 +93,10 @@ The repository's \`vercel.json\` configures clean routes and baseline browser se
 - The admin session is signed and stored in an HttpOnly, Secure, SameSite=Strict cookie.
 - Admin POST requests require a same-origin Origin header and a valid session (except login/logout).
 - Repeated failed logins are throttled using D1; only an HMAC hash of the network identifier is stored.
-- Viewing URLs are accepted only when they resolve to a YouTube video ID. Other hosts and playlist-only links are rejected.
+- Viewing URLs are accepted only when they resolve to a YouTube video ID. Other hosts and playlist-only links are rejected. Admin video additions and playlist imports also verify that videos are public or unlisted, embeddable, and not region-blocked in India.
+- Playlist imports map episode numbers from explicit title markers such as `Episode 12` or `S1E12`; ambiguous titles, deleted/private videos, and non-embeddable videos are skipped rather than assigned the wrong episode by playlist position.
+- The admin availability cleanup removes unavailable source links and prunes empty episodes/seasons; an anime is removed only when it has no remaining video sources.
+- The language field describes the linked YouTube upload. It cannot select or force an audio track inside YouTube's player.
 - The embedded player uses \`youtube-nocookie.com\`; YouTube still controls playback, availability, advertising and regional restrictions.
 - AniVira does not verify copyright ownership automatically. The administrator is responsible for confirming authorization before adding each video.
 - Keep the Cloudflare token and session secret private. Rotating \`SESSION_SECRET\` invalidates existing admin sessions.
