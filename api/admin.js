@@ -27,9 +27,9 @@ function availableInIndia(video){
 function episodeNumberFromTitle(value){
   const title=String(value||"");
   const patterns=[
-    /\\bS\\d{1,2}\\s*[-_. ]*E(?:P(?:ISODE)?)?\\s*0*(\\d{1,4})\\b/i,
-    /\\b(?:episode|ep)\\s*[#.:_-]?\\s*0*(\\d{1,4})\\b/i,
-    /(?:^|\\s)#\\s*0*(\\d{1,4})(?=\\s|$|[-:])/i
+    /\bS\d{1,2}\s*[-_. ]*E(?:P(?:ISODE)?)?\s*0*(\d{1,4})\b/i,
+    /\b(?:episode|ep)\s*[#.:_-]?\s*0*(\d{1,4})\b/i,
+    /(?:^|\s)#\s*0*(\d{1,4})(?=\s|$|[-:])/i
   ];
   for(const pattern of patterns){const match=title.match(pattern);if(match){const n=Number(match[1]);if(Number.isSafeInteger(n)&&n>0)return n;}}
   return 0;
