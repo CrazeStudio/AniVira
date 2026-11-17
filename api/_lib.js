@@ -13,10 +13,11 @@ const schema = [
 ];
 async function query(sql, params) {
   if (!ACCOUNT || !DATABASE || !TOKEN) throw new Error("D1 database is not configured.");
+  const bound = (params || []).map((value) => value === null || value === undefined ? "" : String(value));
   const response = await fetch("https://api.cloudflare.com/client/v4/accounts/" + encodeURIComponent(ACCOUNT) + "/d1/database/" + encodeURIComponent(DATABASE) + "/query", {
     method:"POST",
     headers:{authorization:"Bearer " + TOKEN,"content-type":"application/json"},
-    body:JSON.stringify({sql,params:params || []}),
+    body:JSON.stringify({sql,params:bound}),
     signal:AbortSignal.timeout(12000)
   });
   let data;

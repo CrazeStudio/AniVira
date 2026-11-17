@@ -56,8 +56,8 @@ module.exports = async function handler(req,res) {
       if (!Number.isSafeInteger(id) || id < 1) return json(res,400,{error:"Invalid AniList ID."});
       const anime = await fetchAniListAnime(id);
       await query(
-        "INSERT INTO anime(anilist_id,title,cover_image,banner_image,description,format,season,year,status,genres) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(anilist_id) DO UPDATE SET title=excluded.title,cover_image=excluded.cover_image,banner_image=excluded.banner_image,description=excluded.description,format=excluded.format,season=excluded.season,year=excluded.year,status=excluded.status,genres=excluded.genres",
-        [anime.id,titleOf(anime),anime.coverImage?.large || "",anime.bannerImage || "",anime.description || "",anime.format || "",anime.season || "",anime.seasonYear || null,anime.status || "",JSON.stringify(anime.genres || [])]
+        "INSERT INTO anime(anilist_id,title,cover_image,banner_image,description,format,season,year,status,genres) VALUES(?,?,?,?,?,?,?,NULLIF(?,''),?,?) ON CONFLICT(anilist_id) DO UPDATE SET title=excluded.title,cover_image=excluded.cover_image,banner_image=excluded.banner_image,description=excluded.description,format=excluded.format,season=excluded.season,year=excluded.year,status=excluded.status,genres=excluded.genres",
+        [anime.id,titleOf(anime),anime.coverImage?.large || "",anime.bannerImage || "",anime.description || "",anime.format || "",anime.season || "",anime.seasonYear ? anime.seasonYear : "",anime.status || "",JSON.stringify(anime.genres || [])]
       );
       return json(res,200,{ok:true});
     }
